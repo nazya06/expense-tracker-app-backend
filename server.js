@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";  // Import CORS
 import sequelize from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
@@ -9,7 +10,13 @@ import { errorHandler } from "./middlewares/erorrHandler.js";
 
 const app = express();
 
+// Enable CORS for all origins (you can restrict it to localhost:3000 later)
+app.use(cors());
+
+// Middleware to parse JSON
 app.use(express.json());
+
+// Your other middlewares and routes
 app.use(errorHandler);
 
 app.use("/api/users", userRoutes);
@@ -18,6 +25,7 @@ app.use("/api/budgets", budgetRoutes);
 app.use("/api/transactions", transactionRoutes);
 app.use("/api/categories", categoryRoutes);
 
+// Connect to the database
 sequelize
   .authenticate()
   .then(() => {

@@ -13,5 +13,6 @@ const sequelize = new Sequelize(
     logging: false,
   }
 );
+console.log("DB password type:", typeof process.env.DB_PASSWORD);
 
 export default sequelize;
