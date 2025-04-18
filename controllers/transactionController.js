@@ -32,20 +32,23 @@ export const getTransactions = async (req, res) => {
 };
 
 export const createTransaction = async (req, res) => {
-  const { amount, description, categoryId } = req.body; // Destructure the request body
-
+  const { amount, description, CategoryId, BudgetId, type, date } = req.body;
+  console.log("Полученные данные:", req.body);
+  if (!CategoryId || !BudgetId) {
+    return res.status(400).json({ message: "CategoryId и BudgetId обязательны!" });
+  }
   try {
-    // Create a new transaction, set categoryId to null if it's not provided
     const transaction = await Transaction.create({
       amount,
       description,
-      categoryId: categoryId || null, // Allow category to be null
+      CategoryId,  
+      BudgetId,
+      type,
+      date: date || new Date()
     });
 
-    // Return the newly created transaction in the response
     res.status(201).json(transaction);
   } catch (error) {
-    // Handle any errors that occur during the transaction creation
     res.status(500).json({ message: "Server error", error });
   }
 };

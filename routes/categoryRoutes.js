@@ -2,6 +2,7 @@ import express from "express";
 import {
   createCategory,
   getCategories,
+  getCategoriesByBudget
 } from "../controllers/categoryController.js";
 
 import { authMiddleware } from "../middlewares/authMiddleware.js";
@@ -19,5 +20,7 @@ router.post(
 );
 
 router.get("/", authMiddleware, getCategories);
+router.get("/:budgetId", authMiddleware, getCategoriesByBudget);
+
 
 export default router;

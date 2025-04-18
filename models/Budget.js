@@ -13,6 +13,11 @@ const Budget = sequelize.define("Budget", {
     type: DataTypes.FLOAT,
     allowNull: false,
   },
+  UserId: {
+    type: DataTypes.UUID,
+    allowNull: false
+  }
+  
 });
 
 User.hasMany(Budget);

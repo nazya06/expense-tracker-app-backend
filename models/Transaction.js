@@ -4,6 +4,11 @@ import Budget from "./Budget.js";
 import Category from "./Category.js";
 
 const Transaction = sequelize.define('Transaction', {
+  id: {
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4, 
+    primaryKey: true,
+  },
   amount: {
     type: DataTypes.FLOAT,
     allowNull: false,
@@ -12,17 +17,25 @@ const Transaction = sequelize.define('Transaction', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  categoryId: {
-    type: DataTypes.INTEGER,
-    allowNull: true, // Allow categoryId to be null
+  CategoryId: {
+    type: DataTypes.UUID,
+    allowNull: false,
     references: {
       model: 'Categories',
+      key: 'id',
+    }
+  },
+  BudgetId: {
+    type: DataTypes.UUID,
+    allowNull: false,
+    references: {
+      model: 'Budgets', 
       key: 'id',
     }
   }
 });
 
 Transaction.belongsTo(Budget);
-Transaction.belongsTo(Category);
+Transaction.belongsTo(Category, { foreignKey: 'CategoryId' });
 
 export default Transaction;

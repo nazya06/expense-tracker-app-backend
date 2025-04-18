@@ -21,3 +21,13 @@ export const createCategory = async (req, res) => {
     res.status(500).json({ message: "Error creating category", error });
   }
 };
+
+export const getCategoriesByBudget = async (req, res) => {
+  const { budgetId } = req.params;
+  try {
+    const categories = await Category.findAll({ where: { BudgetId: budgetId } });
+    res.json(categories);
+  } catch (err) {
+    res.status(500).json({ message: "Failed to get categories", err });
+  }
+};

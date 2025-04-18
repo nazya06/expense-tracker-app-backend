@@ -3,7 +3,7 @@ import { User } from "../models/index.js";
 export const getUserProfile = async (req, res) => {
   try {
     const user = await User.findByPk(req.user.id, {
-      attributes: ["id", "username", "email"],
+      attributes: ["id", "email"],
     });
 
     if (!user) return res.status(404).json({ message: "User not found" });
@@ -20,16 +20,15 @@ export const updateUserProfile = async (req, res) => {
 
     if (!user) return res.status(404).json({ message: "User not found" });
 
-    const { username, email } = req.body;
+    const { email } = req.body;
 
-    user.username = username || user.username;
+    // user.username = username || user.username;
     user.email = email || user.email;
 
     await user.save();
 
     res.json({
       id: user.id,
-      username: user.username,
       email: user.email,
     });
   } catch (error) {

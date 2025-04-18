@@ -21,4 +21,5 @@ router.post(
 
 router.get("/", authMiddleware, getBudgets);
 
+
 export default router;
