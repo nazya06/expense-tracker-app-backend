@@ -22,7 +22,6 @@ export const updateUserProfile = async (req, res) => {
 
     const { email } = req.body;
 
-    // user.username = username || user.username;
     user.email = email || user.email;
 
     await user.save();
